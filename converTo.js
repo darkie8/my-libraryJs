@@ -186,29 +186,26 @@ if (!Array.prototype.map) {
 }
 // actual function
 function converToSec(str) {
-    var xyz = [365 * 24 * 3600, 30 * 24 * 3600, 7 * 24 * 3600, 24 * 3600, 3600, 60, 1].reverse()
-    var res = str.replace(/[a-zA-Z]/gi, ",");
-    var array1 = res.split(',')
-    return array1.filter(function (el) {
-        return (el !== "") ? true : false
-    }).map(function (el) {
-
-        return parseInt(el)
-    }).reverse().map(function (el, i) {
-        return el * xyz[i]
-
-    }).reduce(function (x, y) {
-        return x + y
-    })
+   return eval(str.replace(/[PTS]/g, '')
+   .replace('Y', '*12*30*24*3600+')
+   .replace('M', '*30*24*3600+')
+   .replace('W', '*7*24*3600+')
+   .replace('D', '*24*3600+')
+   .replace('H', '*3600+')
+   .replace('M', '*60+')
+   )
 }
-function convertTomin (str) {
-    return converToSec(str) / 60 
+
+function convertTomin(str) {
+    return converToSec(str) / 60
 }
-function convertTohour (str) {
+
+function convertTohour(str) {
     return converToSec(str) / 3600
 }
-function convertToday (str) {
-    return converToSec(str) / (24*3600)
+
+function convertToday(str) {
+    return converToSec(str) / (24 * 3600)
 }
 var convertedValues = {
     'day': convertToday,
